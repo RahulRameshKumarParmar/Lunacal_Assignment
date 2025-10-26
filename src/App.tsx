@@ -1,10 +1,59 @@
 import { useState } from 'react';
 import './App.css';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaTrash } from 'react-icons/fa';
+
+interface Image {
+  imgSource: string,
+}
 
 function App() {
 
   const [clickedButton, setClickedButton] = useState<'About Me' | 'Experience' | 'Recommended'>('About Me');
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [constantImages, setConstantImages] = useState<Image[]>([
+    {
+      imgSource: 'gallery-image.png'
+    },
+    {
+      imgSource: 'gallery-image - 1.png'
+    },
+    {
+      imgSource: 'gallery-image - 2.png'
+    },
+    {
+      imgSource: 'gallery-image - 3.png'
+    },
+  ]);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  const imagesPerView = 3;
+  const maxIndex = Math.max(0, constantImages.length - imagesPerView);
+
+  const handleImageChange = (e: any) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleConfirm = () => {
+    setShowPopup(false);
+    if (selectedImage) {
+      setConstantImages([...constantImages, {imgSource: selectedImage}]);
+      setSelectedImage(null);
+    }
+  };
+
+  const deleteImage = (id: number) => {
+    const updatedAllImages = constantImages.filter((_, index) => index !== id);
+    setConstantImages(updatedAllImages);
+  }
 
   return (
     <>
@@ -97,21 +146,42 @@ function App() {
 
                 <div className='gallery-btn flex items-center gap-3 me-5'>
                   <button
+                    onClick={() => setShowPopup(true)}
                     className='add-image-btn text-[#FFFFFF]  font-jakarta text-[11px] font-semibold leading-[6.3px] px-4 py-4 me-5 rounded-[103px]'>
                     + ADD IMAGE
                   </button>
 
                   <button
+                    onClick={() => setCurrentIndex((prev: number) => Math.max(0, prev - 1))}
+                    disabled={currentIndex === 0}
                     className='left-arrow-btn p-3 rounded-full bg-linear-to-r from-[#303439] to-[#161718] transition-colors cursor-pointer'>
                     <FaArrowLeft
                       className='text-[#6F787C]' />
                   </button>
 
                   <button
+                    onClick={() => setCurrentIndex((prev: number) => Math.min(maxIndex, prev + 1))}
+                    disabled={currentIndex >= maxIndex}
                     className='right-arrow-btn p-3 rounded-full bg-linear-to-r from-[#303439] to-[#161718] cursor-pointer'>
                     <FaArrowRight
                       className='text-[#6F787C]' />
                   </button>
+                </div>
+              </div>
+              <div className='overflow-hidden'>
+                <div
+                  style={{ transform: `translateX(-${currentIndex * 33.33}%)` }}
+                  className='images flex items-center justify-around gap-4 transition-transform mt-5 duration-300'>
+                  {constantImages.map((i, v) => (
+                    <div className='mt-3 relative group transition-all max-w-[30.5%] shrink-0' key={v}>
+                      <img src={i.imgSource} alt="gallery photos" />
+                      <button
+                        onClick={() => deleteImage(v)}
+                        className='opacity-0 group-hover:opacity-100 hover:bg-[black] cursor-pointer absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#00000065] p-4 rounded-lg'>
+                        <FaTrash color='white' />
+                      </button>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -124,6 +194,53 @@ function App() {
         </div>
 
       </section>
+
+      {/* 🆕 Popup Modal */}
+      {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
+          <div className="bg-[#2b2f33] text-white p-6 rounded-xl shadow-lg w-[90%] max-w-md text-center">
+            <h2 className="text-xl font-semibold mb-4">Upload Image</h2>
+
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden mb-4 mx-auto p-3 border border-amber-50"
+              id='file-upload'
+            />
+
+            <label
+              htmlFor="file-upload"
+              className="mt-5 border border-gray-600 hover:bg-gray-900 px-5 py-3 rounded-lg cursor-pointer inline-block mb-5"
+            >
+              Choose Image
+            </label>
+
+            {selectedImage && (
+              <img
+                src={selectedImage}
+                alt="Preview"
+                className="w-48 h-48 object-cover mx-auto rounded-lg mb-4"
+              />
+            )}
+
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={() => setShowPopup(false)}
+                className="bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded-lg cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirm}
+                className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg cursor-pointer"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }
