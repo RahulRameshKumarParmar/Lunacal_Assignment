@@ -66,11 +66,11 @@ function App() {
         {/* description section ends */}
 
 
-        <div className='flex flex-col justify-center  items-center me-5'>
+        <div className='flex flex-col justify-center  items-center xl:me-5 lg:me-4 md:me-0 overflow-x-hidden'>
           {/* tabs section starts */}
 
           <div
-            className='tab-section grid grid-cols-[10%_1fr] bg-[#363C43] mt-24 rounded-[18.89px] h-[45vh] w-[90%] max-h-[316px] max-w-[720px] '>
+            className='tab-section grid grid-cols-[10%_1fr] bg-[#363C43] mt-24 rounded-[18.89px] h-[45vh] w-[89%] max-h-[316px] max-w-[720px] '>
 
             <div className='symbols mt-5 ms-1 flex flex-col items-center gap-20'>
               <img className='w-6 h-6' src="question-mark.png" alt="question-mark-design" />
@@ -78,7 +78,7 @@ function App() {
             </div>
 
             <div>
-              <div className='tabs relative ms-3 mt-5 flex items-center justify-around gap-1.5 bg-[#171717] rounded-[15px] w-[90%] h-[20%] max-w-[614px] max-h-[62px] overflow-hidden'>
+              <div className='tabs relative ms-3 mt-5 flex items-center justify-around gap-1.5 bg-[#171717] rounded-[15px] w-[90%] h-[20%] max-w-[614px] max-h-[62px] break-all'>
 
                 {/* Slider */}
                 <div
@@ -96,24 +96,24 @@ function App() {
 
                 <button
                   onClick={() => setClickedButton('About Me')}
-                  className={`about-btn font-poppins text-[18px] font-medium leading-[16.1px] max-w-[195px] max-h-[45px] px-6 py-1.5 cursor-pointer ${clickedButton === 'About Me' ? 'text-[#FFFFFF]' : 'text-[#A3ADB2]'}`}>
+                  className={`about-btn font-poppins xl:text-[18px] lg:text-[16px] md:text-[14px] font-medium leading-[16.1px] max-w-[195px] max-h-[45px] px-6 py-1.5 cursor-pointer ${clickedButton === 'About Me' ? 'text-[#FFFFFF]' : 'text-[#A3ADB2]'}`}>
                   About Me
                 </button>
 
                 <button
                   onClick={() => setClickedButton('Experience')}
-                  className={`experience-btn font-poppins text-[18px] font-medium leading-[16.1px] w-[30%] h-[6vh] max-w-[195px] max-h-[45px] px-6 py-1.5 cursor-pointer ${clickedButton === 'Experience' ? 'text-[#FFFFFF]' : 'text-[#A3ADB2]'}`}>
+                  className={`experience-btn font-poppins xl:text-[18px] lg:text-[16px] md:text-[14px] font-medium leading-[16.1px] max-w-[195px] max-h-[45px] px-6 py-1.5 cursor-pointer ${clickedButton === 'Experience' ? 'text-[#FFFFFF]' : 'text-[#A3ADB2]'}`}>
                   Experiences
                 </button>
 
                 <button
                   onClick={() => setClickedButton('Recommended')}
-                  className={`recommended-btn font-poppins text-[18px] font-medium leading-[16.1px] w-[35%] h-[6vh] max-w-[195px] max-h-[45px] px-6 py-1.5 cursor-pointer ${clickedButton === 'Recommended' ? 'text-[#FFFFFF]' : 'text-[#A3ADB2]'}`}>
+                  className={`recommended-btn font-poppins xl:text-[18px] lg:text-[16px] md:text-[14px] font-medium leading-[16.1px] max-w-[195px] max-h-[45px] px-6 py-1.5 cursor-pointer ${clickedButton === 'Recommended' ? 'text-[#FFFFFF]' : 'text-[#A3ADB2]'}`}>
                   Recommended
                 </button>
               </div>
 
-              <div className='font-jakarta ms-3 mt-5 w-[90%] text-[16px] text-[#969696]'>
+              <div className='font-jakarta ms-3 mt-5 w-[90%] lg:text-[14px] md:text-[13px] xl:text-[16px] text-[#969696] break-all'>
                 <p className='mb-3'>
                   Hello! I’m Dave, your sales rep here from Salesforce. I’ve been working at this awesome company for 3 years now.
                 </p>
@@ -130,7 +130,7 @@ function App() {
 
           {/* gallery section starts */}
           <div
-            className='gallery-section grid grid-cols-[10%_1fr] bg-[#363C43] w-[90%] h-[44vh] max-h-[330px] max-w-[720px] rounded-[18.89px]'>
+            className='gallery-section grid grid-cols-[10%_1fr] bg-[#363C43] w-[89%] h-[44vh] max-h-[330px] max-w-[720px] rounded-[18.89px]'>
 
             <div className='symbols mt-5 ms-1 flex flex-col items-center gap-20'>
               <img className='w-6 h-6' src="question-mark.png" alt="question-mark-design" />
@@ -140,14 +140,14 @@ function App() {
             <div className='mt-5'>
               <div className='flex justify-between items-center'>
                 <span
-                  className='gallery-title bg-[#171717] rounded-[17px] max-w-[149px] max-h-[62px] font-poppins leading-auto text-[18px] text-[#FFFFFF] px-[2.2rem] py-3'>
+                  className='gallery-title bg-[#171717] rounded-[17px] max-w-[149px] max-h-[62px] font-poppins leading-auto text-[18px] text-[#FFFFFF] md:px-6 md:py-2 xl:px-[2.2rem] xl:py-3 px-[2.2rem] py-3'>
                   Gallery
                 </span>
 
                 <div className='gallery-btn flex items-center gap-3 me-5'>
                   <button
                     onClick={() => setShowPopup(true)}
-                    className='add-image-btn text-[#FFFFFF]  font-jakarta text-[11px] font-semibold leading-[6.3px] px-4 py-4 me-5 rounded-[103px]'>
+                    className='add-image-btn text-[#FFFFFF]  font-jakarta md:text-[9px] xl:text-[11px] text-[11px] font-semibold leading-[6.3px] md:p-3 xl:p-4 p-4 me-5 rounded-[103px]'>
                     + ADD IMAGE
                   </button>
 
